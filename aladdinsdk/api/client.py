@@ -560,10 +560,10 @@ class AladdinAPI():
             api_responses_paginated = [api_response]
 
         _next_page_token = api_response.next_page_token if _deserialize_to_object else api_response['nextPageToken']
-        if page_count >= _asdk_pagination_options['number_of_pages'] or \
-            _next_page_token is None or \
-            ('page_token' in _asdk_pagination_options and _asdk_pagination_options['page_token'] == _next_page_token) or \
-            time.time() - _asdk_pagination_options['start_time'] >= _asdk_pagination_options['timeout']:
+        if (page_count >= _asdk_pagination_options['number_of_pages']
+                or _next_page_token is None
+                or ('page_token' in _asdk_pagination_options and _asdk_pagination_options['page_token'] == _next_page_token)
+                or time.time() - _asdk_pagination_options['start_time'] >= _asdk_pagination_options['timeout']):
             return api_responses_paginated
 
         _asdk_pagination_options['page_token'] = _next_page_token
@@ -701,9 +701,8 @@ class AladdinAPI():
         if find_str is None or replace_str is None:
             raise AsdkSetupException("Both 'find' and 'replace' must be provided for URL rewriting.")
         self.last_original_host = self.instance.api_client.configuration.host
-        self.instance.api_client.configuration.host = re.sub(find_str,
-                                                                replace_str,
-                                                                self.last_original_host)
+        self.instance.api_client.configuration.host = re.sub(
+            find_str, replace_str, self.last_original_host)
         if self.instance.api_client.configuration.host == self.last_original_host:
             _logger.warning("URL rewrite 'find' string did not match any part of the original URL.")
         else:

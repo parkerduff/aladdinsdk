@@ -85,7 +85,7 @@ def get_refresh_token_from_oauth_server(client_id=None,
         oauth = OAuth2Session(client_id, redirect_uri=f"http://localhost:{localhost_redirect_uri_port}", scope=scopes)
         _authorization_url, state = oauth.authorization_url(authorization_url)
 
-        print(f"Continue on browser to authenticate... (Ctrl+C to cancel)")
+        print("Continue on browser to authenticate... (Ctrl+C to cancel)")
         webbrowser.open(_authorization_url)
         countdown_thread.start()
         auth_code = start_local_auth_handler(localhost_redirect_uri_port)

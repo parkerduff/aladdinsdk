@@ -15,9 +15,15 @@ limitations under the License.
 """
 
 from aladdinsdk.api import AladdinAPI
-from aladdinsdk.api.codegen.platform.studio.studio_notification.v1.studio_subscription.models.v1_studio_entity_type import V1StudioEntityType
-from aladdinsdk.api.codegen.platform.studio.studio_notification.v1.studio_subscription.models.v1_studio_notification_action import V1StudioNotificationAction
-from aladdinsdk.api.codegen.platform.studio.studio_notification.v1.studio_subscription.models.v1_studio_notification_event_type import V1StudioNotificationEventType
+from aladdinsdk.api.codegen.platform.studio.studio_notification.v1.studio_subscription.models.v1_studio_entity_type import (
+    V1StudioEntityType,
+)
+from aladdinsdk.api.codegen.platform.studio.studio_notification.v1.studio_subscription.models.v1_studio_notification_action import (
+    V1StudioNotificationAction,
+)
+from aladdinsdk.api.codegen.platform.studio.studio_notification.v1.studio_subscription.models.v1_studio_notification_event_type import (
+    V1StudioNotificationEventType,
+)
 from aladdinsdk.common.blkutils.blkutils import get_files_dat_token_value
 from aladdinsdk.config import user_settings
 import datetime
@@ -107,8 +113,11 @@ class StudioNotification():
             _logger.error("User must be provided or set in user settings for Studio Notifications.")
             raise ValueError("User must be provided or set in user settings for Studio Notifications.")
         self.user = user
-        _logger.debug(f"StudioNotification initialized with action: {self.notification_action}, event name: {self.notification_event_name}, " +
-                      f"event type: {self.notification_event_type}, entity name: {self.studio_entity_name}, entity type: {self.studio_entity_type}, user: {self.user}")
+        _logger.debug(
+            f"StudioNotification initialized with action: {self.notification_action}, "
+            f"event name: {self.notification_event_name}, event type: {self.notification_event_type}, "
+            f"entity name: {self.studio_entity_name}, entity type: {self.studio_entity_type}, user: {self.user}"
+        )
 
     def create_subscription(self, recipients: list):
         """
@@ -126,7 +135,8 @@ class StudioNotification():
 
         valid_email_domains = get_files_dat_token_value('RESEARCH_EMAIL_WHITELIST', default='').split(',')
         for recipient in recipients:
-            if self.notification_action == V1StudioNotificationAction.STUDIO_NOTIFICATION_ACTION_SMTP and not any(recipient.endswith(domain.strip()) for domain in valid_email_domains):
+            if (self.notification_action == V1StudioNotificationAction.STUDIO_NOTIFICATION_ACTION_SMTP
+                    and not any(recipient.endswith(domain.strip()) for domain in valid_email_domains)):
                 _logger.warning(f"Skipping recipient {recipient}. Sending notification is not permitted.")
                 continue
             try:

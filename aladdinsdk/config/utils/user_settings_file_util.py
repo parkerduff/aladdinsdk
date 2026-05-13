@@ -319,17 +319,17 @@ def _set_oauth_auth_config_details_oauth_details_generate_refresh_token(settings
     client_id, client_secret = _set_client_id_client_secret(settings_data)
 
     # Localhost callback URL port
-    localhost_callback_uri_port_str = _read_input_or_default_str(f"Enter localhost callback URI port:", '3000')
+    localhost_callback_uri_port_str = _read_input_or_default_str("Enter localhost callback URI port:", '3000')
     localhost_callback_uri_port = int(localhost_callback_uri_port_str)
 
     # Authorization server URL
     env_var_default_web_server = os.environ.get("defaultWebServer", "https://dev.blackrock.com/")
     def_authorization_url = '/'.join(s.strip('/') for s in [env_var_default_web_server, '/api/oauth2/default/v1/authorize'])
-    authorization_url = _read_input_or_default_str(f"OAuth authorization URL:", def_authorization_url)
+    authorization_url = _read_input_or_default_str("OAuth authorization URL:", def_authorization_url)
 
     # Token URL
     def_token_url = '/'.join(s.strip('/') for s in [env_var_default_web_server, '/api/oauth2/default/v1/token'])
-    token_url = _read_input_or_default_str(f"OAuth token URL:", def_token_url)
+    token_url = _read_input_or_default_str("OAuth token URL:", def_token_url)
 
     # Scopes
     currently_available_scopes = _list_currently_available_scopes()
